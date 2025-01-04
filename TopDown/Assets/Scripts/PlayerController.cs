@@ -23,9 +23,6 @@ public class PlayerController : MonoBehaviour
         input.x = Input.GetAxisRaw("Horizontal");
         input.y = Input.GetAxisRaw("Vertical");
 
-        animator.SetFloat("moveX", input.x);
-        animator.SetFloat("moveY", input.y);
-
         // No diagonal movement
         // Evita el movimiento diagonal
         if (input.x != 0) input.y = 0;
@@ -34,14 +31,17 @@ public class PlayerController : MonoBehaviour
         // Si hay entrada, calcula la posición objetivo
         if (input != Vector2.zero)
         {
-            var targetPos = transform.position;
-            targetPos.x += input.x;
-            targetPos.y += input.y;
+          animator.SetFloat("moveX", input.x);
+          animator.SetFloat("moveY", input.y);
+          var targetPos = transform.position;
+          targetPos.x += input.x;
+          targetPos.y += input.y;
 
-            StartCoroutine(Move(targetPos)); // Start moving
-            // Inicia el movimiento
+          StartCoroutine(Move(targetPos)); // Start moving
+          // Inicia el movimiento
         }
     }
+    animator.SetBool("isMoving", isMoving);
   }
 
   IEnumerator Move(Vector3 targetPos)
